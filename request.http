@@ -1,0 +1,32 @@
+
+GET http://localhost:3001
+
+
+###
+GET http://localhost:3001/usuarios
+
+
+###
+
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+    "nombre": "eddy",
+    "email": "eddy@test.com",
+    "password": "12345"
+}
+
+###
+
+GET  http://localhost:3001/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "eddy",
+    "email": "eddy@test.com",
+    "password": "12345"
+}
+
+###
+POST http://localhost:3001/auth/login
