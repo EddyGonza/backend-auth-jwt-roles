@@ -1,4 +1,5 @@
-import { createUsuario, getUsuarios,updateUserRole } from "../services/usuarios.service.js";
+import { createUsuario, getUsuarios, updateUsuario, deleteUsuario } 
+from "../services/usuarios.service.js";
 
 
 // CREATE
@@ -36,36 +37,43 @@ export const getUsuariosController = async (req, res) => {
   }
 };
 
-
-//UPDATE
-export const updateUserRoleController = async (req,res) => {
+export const updateUsuarioController = async (req, res) => {
   try {
-    const {id} = req.params;
-    const {rol} = req.body;
+    const { id } = req.params;
+    const { nombre, email, rol } = req.body;
 
-    //VALIDACION BASICA
-    if(req.user.id == id){
-      return res.status(400).json({error:"No puedes cambiar tu propio rol"});
-    }
-    if (!rol){
-      return res.status(400).json ({error: "Rol requerido"});
+    if (!nombre || !email || !rol) {
+      return res.status(400).json({ error: "Faltan datos" });
     }
 
-    if(!["admin", "user"].includes(rol)){
-      return res.status(400).json({error: "rol inválido"});
-    }
-    const user = await updateUserRole(id,rol);
+    const user = await updateUsuario(id, { nombre, email, rol });
 
-    if (!user){
-      return res.status(400).json({error: "Usuario no encontrado"})
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    res.json({
-      message: "rol actualizado",
-      user,
-    });
-  }catch (error) {
+    res.json(user);
+
+  } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error del servidor" });
+    res.status(500).json({ error: "Error al actualizar" });
+  }
+};
+
+export const deleteUsuarioController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await deleteUsuario(id);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    res.json({ message: "Usuario eliminado" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar" });
   }
 };

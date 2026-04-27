@@ -1,7 +1,11 @@
-import app from "./app.js";
-import dotenv from "dotenv";
 
+import dotenv from "dotenv";
 dotenv.config();
+
+import app from "./app.js";
+import usuariosRoutes from './routes/usuarios.routes.js';
+
+app.use(usuariosRoutes);
 
 const PORT = process.env.PORT || 3001;
 

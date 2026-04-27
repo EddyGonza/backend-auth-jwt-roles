@@ -1,14 +1,19 @@
-import { Router } from "express";
-import { authMiddleware } from "../middlewares/auth.middleware.js"; 
-import { createUsuarioController,getUsuariosController,updateUserRoleController } from "../controllers/usuarios.controller.js";
-import { roleMiddleware } from "../middlewares/role.middleware.js";
+import express from 'express';
+import {
+  createUsuarioController,
+  getUsuariosController,
+  updateUsuarioController,
+  deleteUsuarioController
+} from '../controllers/usuarios.controller.js';
 
+import { authMiddleware } from '../middlewares/auth.middleware.js';
 
-const router = Router();
+const router = express.Router();
 
-router.post("/", createUsuarioController);
-router.get("/",authMiddleware,roleMiddleware(["admin"]),getUsuariosController);
-router.patch("/:id/rol", authMiddleware,roleMiddleware(["admin"]),updateUserRoleController)
+router.post('/usuarios', createUsuarioController);
+router.get('/usuarios', authMiddleware, getUsuariosController);
+
+router.put('/usuarios/:id', authMiddleware, updateUsuarioController);
+router.delete('/usuarios/:id', authMiddleware, deleteUsuarioController);
 
 export default router;
-

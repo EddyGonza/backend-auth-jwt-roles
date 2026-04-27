@@ -1,0 +1,62 @@
+<div class="container">
+<div class="top-bar">
+  
+<h2>Usuarios</h2>
+  <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+</div>
+
+
+<p>Total: {{ usuarios.length }}</p>
+
+<!-- FORM -->
+<h3>{{ modoEdicion ? 'Editar usuario' : 'Crear usuario' }}</h3>
+<div class="form">
+<input [(ngModel)]="nombre" placeholder="Nombre">
+<input [(ngModel)]="email" placeholder="Email">
+<input [(ngModel)]="password" type="password" placeholder="Password">
+
+<select [(ngModel)]="rol">
+  <option value="user">User</option>
+  <option value="admin">Admin</option>
+</select>
+
+<button *ngIf="!modoEdicion" (click)="crearUsuario()">Crear</button>
+<button *ngIf="modoEdicion" (click)="guardarEdicion()">Guardar</button>
+<button (click)="limpiarFormulario()">Cancelar</button>
+</div>
+
+<!-- TABLA -->
+<table class="tabla">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Rol</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let u of usuarios">
+      <td>{{ u.id }}</td>
+      <td>{{ u.nombre }}</td>
+      <td>{{ u.email }}</td>
+
+      <td>
+        <span [ngClass]="{
+          'badge admin': u.rol === 'admin',
+          'badge user': u.rol === 'user'
+        }">
+          {{ u.rol }}
+        </span>
+      </td>
+
+      <td>
+        <button (click)="editar(u)">✏️</button>
+        <button (click)="eliminar(u.id)">🗑️</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

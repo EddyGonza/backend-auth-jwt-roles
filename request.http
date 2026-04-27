@@ -12,7 +12,6 @@ POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
-    "nombre": "eddy",
     "email": "eddy@test.com",
     "password": "12345"
 }
@@ -28,5 +27,62 @@ Content-Type: application/json
     "password": "12345"
 }
 
+
+
+// crea usuario y logea usuario.
 ###
 POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+  "email": "eddy_login@test.com",
+  "password": "12345"
+}
+
+###
+POST http://localhost:3001/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "eddy",
+  "email": "eddy_login@test.com",
+  "password": "12345"
+}
+
+//proteccion de rutas
+###
+GET http://localhost:3001/usuarios/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlZGR5X2xvZ2luQHRlc3QuY29tIiwicm9sIjoidXNlciIsImlhdCI6MTc3NjMwNjc4NywiZXhwIjoxNzc2MzEwMzg3fQ.p2fDXJMgun-uN_jX3TnY3jbmn7DmqAVWO6NgDLf_1P8
+
+###
+GET  http://localhost:3001/usuarios
+Authorization: Bearer TOKEN_USER
+
+//
+###
+PATCH http://localhost:3001/usuarios/1/rol
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlZGR5X2xvZ2luQHRlc3QuY29tIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3NzYzNzc5ODAsImV4cCI6MTc3NjM4MTU4MH0.sN4lnmu19TeRN55GG3Ir3eSpyHtidJLIOd6PKg0e53Y
+Content-Type: application/json
+
+{
+  "rol": "user"
+}
+
+###
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+  "email": "eddy_login@test.com",
+  "password": "12345"
+}
+
+###
+POST http://localhost:3001/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Eduardo",
+  "email": "eduardo@prueba.com",
+  "password": "12345"
+}
